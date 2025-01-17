@@ -1,12 +1,13 @@
-## Customer Analysis - Customer Lifetime Value with Purchase Frequency and Recency
-Objective: To identify the lifetime value (LTV) of customers by calculating total spend, average purchase frequency, and recency of purchases.
+# Customer Analysis - Customer Lifetime Value with Purchase Frequency and Recency
+## Objective: 
+To identify the lifetime value (LTV) of customers by calculating total spend, average purchase frequency, and recency of purchases.
 
-Tables/Columns Used:
+## Tables/Columns Used:
 
 customers (columns: customer_id, name, email)
 sales (columns: sale_id, customer_id, amount, sale_date)
 
-Explanation:
+## Explanation:
 
 The customer_transactions CTE aggregates each customer's total purchases, total spend, and calculates the days since their last purchase.
 The customer_ltv CTE calculates additional fields like the average purchase value and customer lifetime.
