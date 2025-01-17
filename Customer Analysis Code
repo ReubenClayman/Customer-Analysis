@@ -1,0 +1,48 @@
+WITH customer_transactions AS (
+    SELECT 
+        c.customer_id,                           -- Customer ID
+        c.name,                                  -- Customer's name
+        COUNT(s.sale_id) AS total_purchases,     -- Total number of purchases made by the customer
+        SUM(s.amount) AS total_spent,            -- Total amount spent by the customer
+        MAX(s.sale_date) AS last_purchase_date,  -- Last purchase date
+        MIN(s.sale_date) AS first_purchase_date, -- First purchase date
+        DATEDIFF(CURRENT_DATE, MAX(s.sale_date)) AS days_since_last_purchase -- Days since the last purchase
+    FROM 
+        customers c
+    JOIN 
+        sales s ON c.customer_id = s.customer_id -- Join the customers table with the sales table
+    GROUP BY 
+        c.customer_id, c.name                    -- Group by customer to aggregate sales data
+),
+customer_ltv AS (
+    SELECT 
+        customer_id, 
+        name,
+        total_spent, 
+        total_purchases,
+        first_purchase_date,
+        last_purchase_date,
+        days_since_last_purchase,
+        ROUND(total_spent / total_purchases, 2) AS avg_purchase_value, -- Calculate average value per purchase
+        DATEDIFF(CURRENT_DATE, first_purchase_date) AS customer_lifetime -- Calculate the customer lifetime in days
+    FROM 
+        customer_transactions
+)
+SELECT 
+    customer_id, 
+    name, 
+    total_spent, 
+    total_purchases, 
+    avg_purchase_value, 
+    customer_lifetime,
+    days_since_last_purchase,
+    CASE 
+        WHEN customer_lifetime <= 180 THEN 'New'
+        WHEN customer_lifetime BETWEEN 181 AND 365 THEN 'Regular'
+        ELSE 'Loyal'
+    END AS customer_segment,   -- Segment customers based on lifetime
+    ROUND(total_spent / customer_lifetime, 2) AS ltv_per_day  -- Calculate lifetime value per day
+FROM 
+    customer_ltv
+ORDER BY 
+    total_spent DESC;
