@@ -1,4 +1,4 @@
-# Customer Analysis - Customer Lifetime Value with Purchase Frequency and Recency
+## Customer Analysis - Customer Lifetime Value with Purchase Frequency and Recency
 Objective: To identify the lifetime value (LTV) of customers by calculating total spend, average purchase frequency, and recency of purchases.
 
 Tables/Columns Used:
