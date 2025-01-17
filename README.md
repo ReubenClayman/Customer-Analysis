@@ -4,8 +4,11 @@ To identify the lifetime value (LTV) of customers by calculating total spend, av
 
 ## Tables/Columns Used:
 
-customers (columns: customer_id, name, email)
-sales (columns: sale_id, customer_id, amount, sale_date)
+customers 
+(columns: customer_id, name, email)
+
+sales 
+(columns: sale_id, customer_id, amount, sale_date)
 
 ## Explanation:
 
